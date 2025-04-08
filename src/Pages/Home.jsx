@@ -1,21 +1,30 @@
-//FIXME:Fix Grid Responsiveness
-import React from "react"
+import React, { useState } from "react"
 import { useGetAllproductsQuery } from "../Redux/Slices/apiSlice.js"
 import { NavLink } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { AddToCart } from "../Redux/Slices/cartSlice.js"
 import LoadingComponent from "./LoadingComponent.jsx"
+import Search from "../Components/Search.jsx"
+
 const Home = () => {
   const dispatch = useDispatch()
+  const [searchTerm, setSearchTerm] = useState("")
   const { data, isLoading, isError } = useGetAllproductsQuery()
-  if (isLoading) return <LoadingComponent/>
+
+  if (isLoading) return <LoadingComponent />
   if (isError) return <p>Something Went Wrong</p>
+
+  const filteredData = data.filter((el) =>
+    el.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4 place-items-center">
-        {data.map((el, index) => {
-          const { id, discription, image, price, title } = el
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4 place-items-center">
+        {filteredData.map((el, index) => {
+          const { id, discription, image, price, title } = el
           return (
             <div
               className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-72"
