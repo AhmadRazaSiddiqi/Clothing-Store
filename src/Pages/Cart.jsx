@@ -58,7 +58,7 @@ const Cart = () => {
             )
           })}
       <div className="block text-center w-screen">
-        <p className="text-xl font-bold">Total: ${totalPrice}</p>
+        <p className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</p>
       </div>
     </div>
   )
