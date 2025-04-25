@@ -4,6 +4,8 @@ import Cart from "../Pages/Cart.jsx"
 import ProductPage from "../Pages/ProductPage.jsx"
 import Navbar from "../Pages/Navbar.jsx"
 import LoadingComponent from '../Pages/LoadingComponent.jsx'
+import Footer from './Footer.jsx'
+import Header from './Header.jsx'
 
 // Layout that wraps all routes with Navbar and loading logic
 const AppLayout = () => {
@@ -15,8 +17,9 @@ const AppLayout = () => {
 
   return (
     <>
-      <Navbar />
+      <Header/>
       <Outlet />
+      <Footer/>
     </>
   )
 }

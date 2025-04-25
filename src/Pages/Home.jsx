@@ -33,7 +33,7 @@ const Home = () => {
     <>
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-3 place-items-center h-auto">
         {currentItems.map((el, index) => {
           const { id, discription, image, price, title } = el
           return (
@@ -77,7 +77,7 @@ const Home = () => {
           )
         })}
       </div>
-      <Pagination itemsPerPage={itemsPerPage} Data={Data} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Pagination itemsPerPage={itemsPerPage} Data={Data} currentPage={currentPage} items={currentItems} setCurrentPage={setCurrentPage} />
     </>
   )
 }

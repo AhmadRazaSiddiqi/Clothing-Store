@@ -9,7 +9,7 @@ const Pagination = ({ itemsPerPage, Data, currentPage, setCurrentPage }) => {
     <nav >
       <ul className="flex justify-evenly" >
         <li>
-          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} className="bg-slate-400 text-white rounded px-1 py-0.5 mb-4 cursor-pointer hover:bg-slate-800">
             Previous
           </button>
         </li>
@@ -21,7 +21,7 @@ const Pagination = ({ itemsPerPage, Data, currentPage, setCurrentPage }) => {
           </li>
         ))}
         <li>
-          <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage == 5}>
+          <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage == 5} className="bg-slate-400 text-white rounded px-1 py-0.5 mb-4 cursor-pointer hover:bg-slate-800">
             Next
           </button>
         </li>
