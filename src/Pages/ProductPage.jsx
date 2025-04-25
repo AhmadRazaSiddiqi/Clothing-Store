@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { useGetAllproductsQuery } from "../Redux/Slices/apiSlice.js"
 import { useSelector, useDispatch } from "react-redux"
 import {AddToCart} from "../Redux/Slices/cartSlice.js"
+import { toast } from "react-toastify"
 const ProductPage = () => {
   const [ProductQuantity, setProductQuantity] = useState(1)
   const { data, isLoading, isError } = useGetAllproductsQuery()
@@ -44,10 +45,12 @@ const ProductPage = () => {
               </button>
             </div>
             <button
-              onClick={() =>
+              onClick={() =>{
                 dispatch(
                   AddToCart({ product: Product, quantity: ProductQuantity })
                 )
+                toast.success('Added To Cart')
+              }
               }
               className="bg-slate-900 rounded h-10 cursor-pointer text-white px-5 w-52 block mx-auto hover:shadow-2xl"
             >
