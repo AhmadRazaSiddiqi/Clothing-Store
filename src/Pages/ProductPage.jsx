@@ -52,7 +52,7 @@ const ProductPage = () => {
                 toast.success('Added To Cart')
               }
               }
-              className="bg-slate-900 rounded h-10 cursor-pointer text-white px-5 w-52 block mx-auto hover:shadow-2xl"
+              className="bg-slate-900 rounded-full h-10 cursor-pointer text-white px-5 w-52 block mx-auto hover:shadow-2xl hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
             >
               Add to cart
             </button>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  value: JSON.parse(localStorage.getItem("cart")) || []
+  cartItems: JSON.parse(localStorage.getItem("cart")) || []
 }
 
 export const cartSlice = createSlice({
@@ -9,35 +9,35 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const { id} = action.payload
-      const found = state.value.find((p) => p.id === id)
+      const { id } = action.payload
+      const found = state.cartItems.find((p) => p.id === id)
       if (found) {
         found.quantity += 1
       } else {
-        state.value.push({ ...action.payload, quantity: 1 })
+        state.cartItems.push({ ...action.payload, quantity: 1 })
       }
-      localStorage.setItem("cart", state.value)
+      localStorage.setItem("cart", JSON.stringify(state.cartItems))
     },
     removeItem: (state, action) => {
       const { id } = action.payload
-      const found = state.value.find((p) => p.id === id)
+      const found = state.cartItems.find((p) => p.id === id)
       if (found) {
         found.quantity -= 1
         if (found.quantity <= 0) {
-          state.value = state.value.filter((i) => i.id !== id)
+          state.cartItems = state.cartItems.filter((i) => i.id !== id)
         }
       }
-      localStorage.setItem("cart", JSON.stringify( state.value))
+      localStorage.setItem("cart", JSON.stringify(state.cartItems))
     },
     AddToCart: (state, action) => {
       const { product, quantity } = action.payload
-      const found = state.value.find((p) => p.id === product.id)
+      const found = state.cartItems.find((p) => p.id === product.id)
       if (found) {
         found.quantity += quantity
       } else {
-        state.value.push({ ...product, quantity })
+        state.cartItems.push({ ...product, quantity })
       }
-      localStorage.setItem("cart",JSON.stringify(state.value))
+      localStorage.setItem("cart", JSON.stringify(state.cartItems))
     },
   },
 })

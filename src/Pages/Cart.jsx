@@ -1,85 +1,111 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addItem, removeItem } from "../Redux/Slices/cartSlice.js"
+import { NavLink } from "react-router-dom"
+import { AddToCart, removeItem } from "../Redux/Slices/cartSlice"
+import { toast } from "react-toastify"
 
 const Cart = () => {
   const dispatch = useDispatch()
-  const cart = useSelector((state) => state.cart.value)
-  if (!cart) return <p>Loading...</p>
+  const cart = useSelector((state) => state?.cart?.cartItems) || []
+  
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
-  const totalPrice = cart.reduce((acc, el) => {
-    const { price, quantity } = el
-    return acc + price * quantity
-  }, 0)
-
+  if (!cart || cart.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Your cart is empty</h2>
+          <p className="text-slate-600 mb-6">Looks like you haven't added anything to your cart yet</p>
+          <NavLink
+            to="/"
+            className="inline-block bg-slate-800 text-white px-6 py-3 rounded-full hover:bg-yellow-500 transition-colors duration-300"
+          >
+            Continue Shopping
+          </NavLink>
+        </div>
+      </div>
+    )
+  }
 
   return (
-  <div className="grid grid-cols-2">
-    <div className=" overflow-x-hidden overflow-y-scroll">
-      {cart.length === 0
-        ? "Cart Is Empty"
-        : cart.map((el, index) => {
-            const {image, price, title, quantity } =
-              el
-            return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <h1 className="text-3xl font-bold text-slate-800 mb-8">Shopping Cart</h1>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-4">
+            {cart.map((item, index) => (
               <div
-                className="w-[50vw] h-[20vh] my-9 mx-auto flex border-y border-slate-300 py-2.5"
                 key={index}
+                className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <img
-                  src={image}
-                  alt=""
-                  className="h-full w-[20%] object-contain mr-3.5"
-                />
-                <div className="h-full content-center font-semibold">
-                  <p>{title}</p>
-                  <div className="mt-5">
-                    <button
-                      className="border-[1px] border-slate-900 hover:bg-slate-900 focus:bg-slate-900 w-6 h-6 cursor-pointer rounded hover:text-white ml-1 text-center pb-3 mr-1"
-                      onClick={() => {
-                        dispatch(removeItem(el))
-                      }}
-                    >
-                      -
-                    </button>
-                    <span>{quantity}</span>
-                    <button
-                      className=" border-[1px] border-slate-900 hover:bg-slate-900 focus:bg-slate-900 w-6 h-6 cursor-pointer rounded hover:text-white ml-1 text-center pb-3"
-                      onClick={() => {
-                        dispatch(addItem(el))
-                      }}
-                    >
-                      +
-                    </button>
-                
-                    <span className="ml-20 font-bold">${price * quantity}</span>
+                <div className="flex gap-4">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-24 h-24 object-contain"
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-slate-800 mb-2">{item.title}</h3>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center border rounded-full overflow-hidden bg-gray-50">
+                          <button
+                            className="px-3 py-1 hover:bg-gray-100 text-slate-600 transition-colors"
+                            onClick={() => dispatch(removeItem(item))}
+                          >
+                            -
+                          </button>
+                          <span className="px-4 py-1 font-medium text-slate-800">
+                            {item.quantity}
+                          </span>
+                          <button
+                            className="px-3 py-1 hover:bg-gray-100 text-slate-600 transition-colors"
+                            onClick={() => dispatch(AddToCart({ product: item, quantity: 1 }))}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <span className="font-bold text-slate-800">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            )
-          })}
- 
-    </div>
-    <div className="">
-        <p className="text-2xl text-center font-semibold border-b border-slate-500 mb-[30vh] ">Order Summary</p>
-        <div className="flex justify-between px-4">
-        <p className="font-bold text-lg">Parchased Items</p>
-        <span className="font-semibold text-lg">$342</span>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <h2 className="text-xl font-bold text-slate-800 mb-6">Order Summary</h2>
+            <div className="space-y-4">
+              <div className="flex justify-between py-2">
+                <span className="text-slate-600">Subtotal</span>
+                <span className="font-semibold">${totalPrice.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between py-2 border-t border-gray-100">
+                <span className="text-slate-600">Shipping</span>
+                <span className="font-semibold">Free</span>
+              </div>
+              <div className="flex justify-between py-2 border-t border-gray-100">
+                <span className="text-slate-600">Tax</span>
+                <span className="font-semibold">${(totalPrice * 0.1).toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between py-4 border-t border-gray-100">
+                <span className="font-bold text-lg">Total</span>
+                <span className="font-bold text-lg">
+                  ${(totalPrice * 1.1).toFixed(2)}
+                </span>
+              </div>
+
+              <button className="w-full bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=>toast.success('Your Order Has been Placed Successfully')}>
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-between w-full p-3">
-        <p className="font-bold text-lg">Sales Tax</p>
-        <span className="font-semibold text-lg">$2</span>
-        </div>
-        <div className="flex justify-between border-t-slate-400 border-t">
-          <span className="font-bold ">Grand Total</span>
-        <span className="text-xl font-semibold"> ${344}</span>
-        </div>
-    <div className=" text-center">
       </div>
-      <div className="flex justify-center gap-2 mb-4"><input type="text" className="bg-white border border-slate-300 py-1 rounded w-52 " />
-      <button className="bg-slate-800 text-white p-1 rounded">Apply Cuppon</button></div>
-        <button className="rounded-md border-slate-800 block mx-auto py-2 px-4 border w-52  text-center text-sm  transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none hover:text-white hover:border-transparent focus:text-white font-bold disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" >Check Out</button>
-    </div>
     </div>
   )
 }
