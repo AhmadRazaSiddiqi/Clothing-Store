@@ -119,7 +119,7 @@ const Home = () => {
                         dispatch(AddToCart({ product: el, quantity: 1 }))
                         toast.success("Added To Cart")
                       }}
-                      className="rounded-full bg-slate-800 py-2 px-6 text-white text-sm font-medium transition-all duration-300 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
+                      className="rounded-full bg-slate-800 py-2 px-6 text-white text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
                       type="button"
                     >
                       Add To Cart

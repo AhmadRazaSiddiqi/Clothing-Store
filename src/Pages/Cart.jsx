@@ -1,7 +1,7 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
-import { AddToCart, removeItem } from "../Redux/Slices/cartSlice"
+import { AddToCart, emptyCart, removeItem } from "../Redux/Slices/cartSlice"
 import { toast } from "react-toastify"
 
 const Cart = () => {
@@ -99,7 +99,9 @@ const Cart = () => {
                 </span>
               </div>
 
-              <button className="w-full bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=>toast.success('Your Order Has been Placed Successfully')}>
+              <button className="w-full bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=>{toast.success('Your Order Has been Placed Successfully')
+                return dispatch(emptyCart())
+              }}>
                 Proceed to Checkout
               </button>
             </div>
