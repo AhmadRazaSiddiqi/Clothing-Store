@@ -1,8 +1,9 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
-import { AddToCart, emptyCart, removeItem } from "../Redux/Slices/cartSlice"
+import { AddToCart, deleteItem, emptyCart, removeItem } from "../Redux/Slices/cartSlice"
 import { toast } from "react-toastify"
+import { FaTrashCan } from "react-icons/fa6"
 
 const Cart = () => {
   const dispatch = useDispatch()
@@ -64,8 +65,11 @@ const Cart = () => {
                             onClick={() => dispatch(AddToCart({ product: item, quantity: 1 }))}
                           >
                             +
-                          </button>
+                          </button>    
                         </div>
+                        <button className="hover:text-red-700 pl-96 transition-all duration-500">
+                          <FaTrashCan onClick={()=>dispatch(deleteItem(item))} />
+                        </button>
                       </div>
                       <span className="font-bold text-slate-800">
                         ${(item.price * item.quantity).toFixed(2)}
