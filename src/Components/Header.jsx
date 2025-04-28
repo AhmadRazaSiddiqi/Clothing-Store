@@ -10,16 +10,15 @@ const Header = () => {
     <header className="bg-slate-800 text-white sticky top-0 z-50 shadow-lg">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          {/* Logo/Brand with enhanced styling */}
+          
           <NavLink 
             to="/" 
             className="text-2xl font-bold flex items-center gap-2 transition-transform hover:scale-105"
           >
             <span className="text-yellow-400">Shop</span>
-            <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Hub</span>
           </NavLink>
 
-          {/* Navigation Links with improved hover effects */}
+          
           <div className="flex items-center gap-8">
         
 

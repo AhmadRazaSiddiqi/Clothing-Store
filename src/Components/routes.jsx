@@ -27,7 +27,7 @@ const AppLayout = () => {
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />, // Wrap all routes in layout
+    element: <AppLayout />, 
     children: [
       {
         path: "",
