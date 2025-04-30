@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-
+@import "tailwindcss";
+@import "react-alice-carousel/lib/alice-carousel.css";
 .ProductImg {
     width:  200px;
     height: 200px;

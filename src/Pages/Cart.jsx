@@ -1,11 +1,12 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink } from "react-router-dom"
+import { NavLink,useNavigate } from "react-router-dom"
 import { AddToCart, deleteItem, emptyCart, removeItem } from "../Redux/Slices/cartSlice"
 import { toast } from "react-toastify"
 import { FaTrashCan } from "react-icons/fa6"
 
 const Cart = () => {
+  const navigate=useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state?.cart?.cartItems) || []
   
@@ -103,9 +104,8 @@ const Cart = () => {
                 </span>
               </div>
 
-              <button className="w-full bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=>{toast.success('Your Order Has been Placed Successfully')
-                return dispatch(emptyCart())
-              }}>
+              <button className="w-full bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=> navigate('/checkout')
+              }>
                 Proceed to Checkout
               </button>
             </div>

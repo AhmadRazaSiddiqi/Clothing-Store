@@ -1,15 +1,20 @@
-import { createBrowserRouter, Outlet, useNavigation } from 'react-router-dom'
+import { createBrowserRouter, Outlet, useLocation, useNavigation } from 'react-router-dom'
 import Home from "../Pages/Home.jsx"
 import Cart from "../Pages/Cart.jsx"
 import ProductPage from "../Pages/ProductPage.jsx"
-import Navbar from "../Pages/Navbar.jsx"
 import LoadingComponent from '../Pages/LoadingComponent.jsx'
 import Footer from './Footer.jsx'
 import Header from './Header.jsx'
+import Checkout from '../Pages/Checkout.jsx'
+import { useEffect } from 'react'
 
-// Layout that wraps all routes with Navbar and loading logic
 const AppLayout = () => {
   const navigation = useNavigation()
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   if (navigation.state === "loading") {
     return <LoadingComponent />
@@ -40,6 +45,10 @@ export const router = createBrowserRouter([
       {
         path: "product/:id",
         element: <ProductPage />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },

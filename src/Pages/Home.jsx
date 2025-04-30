@@ -1,61 +1,83 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import {
   useGetAllproductsQuery,
   useGetCategoriesQuery,
-} from "../Redux/Slices/apiSlice.js"
-import { NavLink } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { AddToCart } from "../Redux/Slices/cartSlice.js"
-import LoadingComponent from "./LoadingComponent.jsx"
-import Search from "../Components/Search.jsx"
-import { toast } from "react-toastify"
-import Pagination from "../Components/Pagination.jsx"
+} from "../Redux/Slices/apiSlice.js";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AddToCart } from "../Redux/Slices/cartSlice.js";
+import LoadingComponent from "./LoadingComponent.jsx";
+import Search from "../Components/Search.jsx";
+import { toast } from "react-toastify";
+import Pagination from "../Components/Pagination.jsx";
+import { Slider } from "../Components/Slider.jsx";
 
 const Home = () => {
-  const dispatch = useDispatch()
-  const { data } = useGetAllproductsQuery()
-  const { data: categories } = useGetCategoriesQuery()
-  const [selectedCategory, setSelectedCategory] = useState("all")
+  const dispatch = useDispatch();
+  const { data } = useGetAllproductsQuery();
+  const { data: categories } = useGetCategoriesQuery();
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [toggle, setToggle] = useState(true);
+  const [selectValue,setSelectvalue]=useState("")
 
   useEffect(() => {
     if (data) {
-      setData(data)
+      setData(data);
     }
-  }, [data])
+  }, [data]);
 
-  const { isLoading, isError } = useGetAllproductsQuery()
-  const [Data, setData] = useState([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(8)
+  const { isLoading, isError } = useGetAllproductsQuery();
+  const [Data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
-  if (isLoading) return <LoadingComponent />
-  if (isError) return <p>Something Went Wrong</p>
+  if (isLoading) return <LoadingComponent />;
+  if (isError) return <p>Something Went Wrong</p>;
 
-  let filteredItems = Data
+  let filteredItems = Data;
   if (selectedCategory !== "all") {
-    filteredItems = Data.filter((item) => item.category === selectedCategory)
+    filteredItems = Data.filter((item) => item.category === selectedCategory);
   }
-
+  
   filteredItems = filteredItems.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
+  const SortByprice = () => {
+    filteredItems = [...filteredItems].sort((a, b) => a.price - b.price);
+    setData(filteredItems);
+    setToggle(false);
+  };
+  const SortBypricedesc = () => {
+    filteredItems = [...filteredItems].sort((a, b) => b.price - a.price);
+    setData(filteredItems);
+    setToggle(true);
+  };
 
-  const totalItems = filteredItems.length
-  const lastItemIndex = currentPage * itemsPerPage
-  const firstItemIndex = lastItemIndex - itemsPerPage
-  const currentItems = filteredItems.slice(firstItemIndex, lastItemIndex)
+  const totalItems = filteredItems.length;
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentItems = filteredItems.slice(firstItemIndex, lastItemIndex);
+ 
+  const handleSort=(e)=>{
+    const value=e.target.value
+    setSelectvalue(value)
+    if(value==="Low") SortByprice()
+      else if(value==="High") SortBypricedesc()
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
+      <Slider className="" />
       <div className="max-w-7xl mx-auto px-4">
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <carousel className="h-52 w-full" />
 
         <div className="flex flex-wrap justify-center gap-3 my-6">
           <button
             onClick={() => {
-              setSelectedCategory("all")
-              setCurrentPage(1)
+              setSelectedCategory("all");
+              setCurrentPage(1);
             }}
             className={`px-4 py-2 rounded-full transition-all duration-300 cursor-pointer ${
               selectedCategory === "all"
@@ -65,14 +87,13 @@ const Home = () => {
           >
             All Products
           </button>
-
           {categories &&
             categories.map((category, index) => (
               <button
                 key={index}
                 onClick={() => {
-                  setSelectedCategory(category)
-                  setCurrentPage(1)
+                  setSelectedCategory(category);
+                  setCurrentPage(1);
                 }}
                 className={`px-4 py-2 rounded-full transition-all duration-300 cursor-pointer ${
                   selectedCategory === category
@@ -83,11 +104,16 @@ const Home = () => {
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </button>
             ))}
+  <select value={selectValue} onChange={handleSort} onSelect={handleSort} className="focus:outline-0 cursor-pointer">
+    <option value="" selected disabled hidden>Sort By Price</option>
+    <option value="High"  className="cursor-pointer">High To Low</option>
+    <option value="Low"  className="cursor-pointer">Low To High</option>
+  </select>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {currentItems.map((el, index) => {
-            const { id, discription, image, price, title } = el
+            const { id, discription, image, price, title } = el;
             return (
               <div
                 className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
@@ -116,8 +142,8 @@ const Home = () => {
                     </span>
                     <button
                       onClick={() => {
-                        dispatch(AddToCart({ product: el, quantity: 1 }))
-                        toast.success("Added To Cart")
+                        dispatch(AddToCart({ product: el, quantity: 1 }));
+                        toast.success("Added To Cart");
                       }}
                       className="rounded-full bg-slate-800 py-2 px-6 text-white text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
                       type="button"
@@ -127,7 +153,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
 
@@ -150,7 +176,7 @@ const Home = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
