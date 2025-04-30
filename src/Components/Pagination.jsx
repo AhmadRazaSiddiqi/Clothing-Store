@@ -67,12 +67,12 @@ const Pagination = ({ itemsPerPage, totalItems, currentPage, setCurrentPage }) =
         {getPageNumbers().map((number, index) => (
           <li key={index}>
             {number === '...' ? (
-              <span className="px-2">...</span>
+              <span className="px-2 ">...</span>
             ) : (
               <button 
                 onClick={() => setCurrentPage(number)} 
                 className={`w-8 h-8 rounded-full ${currentPage === number ? 
-                  'bg-slate-800 text-white' : 'bg-slate-200 text-slate-800'} hover:bg-slate-600 hover:text-white`}
+                  'bg-slate-800 text-white' : 'bg-slate-200 text-slate-800 cursor-pointer'} hover:bg-slate-600 hover:text-white cursor-pointer`}
               >
                 {number}
               </button>
