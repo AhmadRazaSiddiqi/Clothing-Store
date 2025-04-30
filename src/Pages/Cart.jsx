@@ -69,7 +69,7 @@ const Cart = () => {
                           </button>    
                         </div>
                         <button className="hover:text-red-700 pl-96 transition-all duration-500">
-                          <FaTrashCan onClick={()=>dispatch(deleteItem(item))} />
+                          <FaTrashCan className="cursor-pointer" onClick={()=>dispatch(deleteItem(item))} />
                         </button>
                       </div>
                       <span className="font-bold text-slate-800">
@@ -104,7 +104,7 @@ const Cart = () => {
                 </span>
               </div>
 
-              <button className="w-full bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=> navigate('/checkout')
+              <button className="w-full bg-slate-800 cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" onClick={()=> navigate('/checkout')
               }>
                 Proceed to Checkout
               </button>
