@@ -95,6 +95,7 @@ const Checkout = () => {
               className=" outlinne-none  outline-1 outline-gray-400 p-2 w-[80%]"
               required
             >
+              <option value="" selected hidden >Choose Your City</option>
               <option value="">Lahore</option>
               <option value="">Karachi</option>
               <option value="">Faislabad</option>
@@ -106,9 +107,9 @@ const Checkout = () => {
       <div className="bg-white h-[90%] w-[80%] p-10">
         <h1 className="font-bold text-2xl text-center">Order Summary</h1>
         <div className="h-[80%] w-full  flex flex-col items-center justify-evenly py-6">
-          <h2 className="w-full flex justify-evenly"><p className="font-semibold">Subtotal</p><span>2 items(s)</span></h2>
-          <h2 className="w-full flex justify-evenly"><p className="font-semibold">Shipping</p><span>Free</span></h2>
-          <h2 className="flex justify-evenly w-full"><p className="font-semibold">Total Price</p> <span>$45.67</span></h2>
+          <h2 className="w-full flex justify-evenly"><p className="text-slate-800">Subtotal</p><span className="font-semibold">2 items(s)</span></h2>
+          <h2 className="w-full flex justify-evenly"><p className="text-slate-800">Shipping</p><span className="font-semibold">Free</span></h2>
+          <h2 className="flex justify-evenly w-full"><p className="text-slate-800">Total Price</p> <span className="font-semibold">$45.67</span></h2>
           <input type="submit" form="myForm" value={ 'CheckOut'} className="w-[80%] cursor-pointer bg-slate-800 text-white py-3 rounded-full font-semibold hover:bg-yellow-500 transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"/>
 
         </div>

@@ -10,7 +10,9 @@ const Navbar = () => {
         <NavLink to={'/'} className={'font-bold text-lg'}>Store</NavLink>
         <NavLink to={`/cart`} className={'relative'}>
         <BsCart3 className='text-2xl cursor-pointer font-extrabold my-4.5'/>
-        <span className='absolute top-0 right-0 rounded-full bg-red-600 text-white h-5 w-5 text-center p-0 text-sm'>{cart.length}</span>
+        <span className='absolute top-0 right-0 rounded-full bg-red-600 text-white h-5 w-5 text-center p-0 text-sm'>{
+        
+        }</span>
         </NavLink>
         
     </div>
