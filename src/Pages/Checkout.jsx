@@ -20,8 +20,8 @@ const Checkout = () => {
   return checkout()
   }
   return (
-    <div className="min-h-screen w-full grid grid-cols-2 bg-gray-200 gap-5 py-9  ">
-      <div className="p-9 bg-white">
+    <div className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-[#F9FAFB] gap-5 py-9  ">
+      <div className="p-9 bg-white shadow-2xl">
         <h1 className="font-semibold text-xl">Delievery Information</h1>
         <form action="#" className="grid grid-cols-2  gap-y-5 text-sm pt-9" id="myForm" onSubmit={handleSubmit}>
           <div>
@@ -104,7 +104,7 @@ const Checkout = () => {
           </div>
         </form>
       </div>
-      <div className="bg-white h-[90%] w-[80%] p-10">
+      <div className="bg-white h-[90%] w-[80%] p-10 shadow-2xl">
         <h1 className="font-bold text-2xl text-center">Order Summary</h1>
         <div className="h-[80%] w-full  flex flex-col items-center justify-evenly py-6">
           <h2 className="w-full flex justify-evenly"><p className="text-slate-800">Subtotal</p><span className="font-semibold">2 items(s)</span></h2>

@@ -9,6 +9,6 @@ import { router } from './Components/routes.jsx'
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
 <RouterProvider router={router}/>
-<ToastContainer autoClose={1000}/>
+<ToastContainer autoClose={1000} hideProgressBar theme='dark'/>
   </Provider>
 )
